@@ -1,5 +1,6 @@
 import { client } from '/app/packages/client/local.js';
 import { feedStore } from '/app/packages/stores/feedStore.js';
+import '/app/components/Feed.js';
 
 class Feed {
     #client = undefined;
@@ -26,7 +27,7 @@ class Feed {
     }
 
     #mount() {
-        this.#root.innerHTML = 'mounted';
+        this.#root.innerHTML = '<feed-component></feed-component>';
     }
 }
 
