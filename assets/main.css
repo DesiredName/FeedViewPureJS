@@ -1,0 +1,11 @@
+:root {
+    --primary-color: #eee;
+    --secondary-color: #fff;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #333;
+        --secondary-color: #eee;
+    }
+}

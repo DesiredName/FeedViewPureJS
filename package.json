@@ -1,0 +1,17 @@
+{
+  "name": "videofeed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server ./ -S -C cert/cert.pem -K cert/key.pem"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "prettier": "3.7.4"
+  }
+}
