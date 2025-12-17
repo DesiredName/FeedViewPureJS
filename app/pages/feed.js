@@ -1,19 +1,26 @@
 import { client } from '/app/packages/client/local.js';
-import { AppAPI } from '/app/packages/api/index.js';
+import { feedStore } from '/app/packages/stores/feedStore.js';
 
 class Feed {
-    #api = undefined;
+    #client = undefined;
     #root = undefined;
 
-    constructor({ api }) {
-        this.#api = api;
+    constructor({ client }) {
+        this.#client = client;
         this.#init();
         this.#mount();
     }
 
-    #init() {
+    async #init() {
+        feedStore.state.loading = true;
+
         const scr = document.currentScript;
         const root = scr.dataset.root;
+        const feed = await this.#client.feed.getPage(1, 10);
+
+        feedStore.state.items = [...feed];
+        feedStore.state.page = 1;
+        feedStore.state.loading = false;
 
         this.#root = document.getElementById(root);
     }
@@ -23,5 +30,6 @@ class Feed {
     }
 }
 
-const api = new AppAPI({ client });
-const feed = new Feed({ api });
+const feed = new Feed({ client });
+
+export { Feed };

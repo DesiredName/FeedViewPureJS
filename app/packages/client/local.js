@@ -12,9 +12,9 @@ const getPage = async (page, size) => {
     });
 };
 
-/** This is a local dev version of data fetching */
 const client = {
     feed: { getPage },
 };
 
+/** This is a local dev version of data fetching */
 export { client };
