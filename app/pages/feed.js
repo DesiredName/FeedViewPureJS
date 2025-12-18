@@ -1,29 +1,29 @@
+import '/app/components/Feed.js';
 import { client } from '/app/packages/client/local.js';
 import { feedStore } from '/app/packages/stores/feedStore.js';
-import '/app/components/Feed.js';
 
-class Feed {
-    #client = undefined;
+class FeedPage {
     #root = undefined;
 
-    constructor({ client }) {
-        this.#client = client;
-        this.#init();
-        this.#mount();
+    constructor() {
+        this.#init().then(() => {
+            this.#mount();
+        });
     }
 
     async #init() {
         feedStore.state.loading = true;
 
-        const scr = document.currentScript;
-        const root = scr.dataset.root;
-        const feed = await this.#client.feed.getPage(1, 10);
+        const scr = import.meta;
+        const params = new URL(scr.url).searchParams;
+        const rootId = params.get('root');
+        const feed = await client.feed.getPage(1, 10);
 
         feedStore.state.items = [...feed];
         feedStore.state.page = 1;
         feedStore.state.loading = false;
 
-        this.#root = document.getElementById(root);
+        this.#root = document.getElementById(rootId);
     }
 
     #mount() {
@@ -31,6 +31,6 @@ class Feed {
     }
 }
 
-const feed = new Feed({ client });
+const page = new FeedPage({ client });
 
-export { Feed };
+export { page };
