@@ -1,5 +1,3 @@
-import '/app/components/Feed.js';
-import { client } from '/app/packages/client/local.js';
 import { feedStore } from '/app/packages/stores/feedStore.js';
 
 class FeedPage {
@@ -12,16 +10,9 @@ class FeedPage {
     }
 
     async #init() {
-        feedStore.state.loading = true;
-
         const scr = import.meta;
         const params = new URL(scr.url).searchParams;
         const rootId = params.get('root');
-        const feed = await client.feed.getPage(1, 10);
-
-        feedStore.state.items = [...feed];
-        feedStore.state.page = 1;
-        feedStore.state.loading = false;
 
         this.#root = document.getElementById(rootId);
     }
@@ -31,6 +22,6 @@ class FeedPage {
     }
 }
 
-const page = new FeedPage({ client });
+const page = new FeedPage();
 
 export { page };
