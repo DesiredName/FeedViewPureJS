@@ -1,5 +1,3 @@
-import { feedStore } from '/app/packages/stores/feedStore.js';
-
 class FeedPage {
     #root = undefined;
 
