@@ -1,11 +1,178 @@
-:root {
-    --primary-color: #eee;
-    --secondary-color: #fff;
+@layer settings, utils, elements, theme;
+
+@import '/assets/theme.css';
+
+/**
+ * I purpousfully use TwCSS classes and varialbe names for the case I'd like to switch to TwCSS =)
+ */
+@layer settings {
+    :root {
+        --primary-color: #eee;
+        --secondary-color: #fff;
+
+        --base-size: 16px;
+        --spacing: 16px;
+
+        --aspect-vdieo: 9 / 16;
+
+        --container-3xl: calc(48 * var(--spacing));
+
+        --tw-scroll-snap-strictness: proximity;
+
+        font-size: var(--base-size);
+    }
+
+    @media screen and (prefers-color-scheme: dark) {
+        :root {
+            --primary-color: #333;
+            --secondary-color: #eee;
+        }
+    }
 }
 
-@media screen and (prefers-color-scheme: dark) {
-    :root {
-        --primary-color: #333;
-        --secondary-color: #eee;
+@layer utils {
+    /* font-size */
+
+    .text-base {
+        font-size: var(--base-size);
+        line-height: calc(1.2 * var(--base-size));
+    }
+
+    /*  */
+    /* padding */
+
+    .p-0 {
+        padding: 0;
+    }
+
+    .p-1 {
+        padding: var(--spacing);
+    }
+
+    .p-2 {
+        padding: calc(2 * var(--spacing));
+    }
+
+    .p-4 {
+        padding: calc(4 * var(--spacing));
+    }
+
+    /*  */
+    /* margin */
+
+    .m-0 {
+        margin: 0;
+    }
+
+    .m-1 {
+        margin: var(--base-size);
+    }
+
+    .m-2 {
+        margin: calc(2 * var(--spacing));
+    }
+
+    .m-4 {
+        margin: calc(4 * var(--spacing));
+    }
+
+    /*  */
+    /* display */
+
+    .block {
+        display: block;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    /*  */
+    /* display flex setup */
+
+    .flex-col {
+        flex-flow: column;
+    }
+
+    .justify-start {
+        justify-content: flex-start;
+    }
+
+    .items-center {
+        align-items: center;
+    }
+
+    .gap-1 {
+        gap: var(--spacing);
+    }
+
+    /*  */
+    /* width */
+
+    .w-full {
+        width: 100%;
+    }
+
+    .w-screen {
+        width: 100vw;
+    }
+
+    .max-w-3xl {
+        max-width: var(--container-3xl);
+    }
+
+    /*  */
+    /* height */
+
+    .h-0 {
+        height: 0;
+    }
+
+    .h-1 {
+        height: var(--spacing);
+    }
+
+    .h-screen {
+        height: 100vh;
+    }
+
+    .max-h-screen {
+        max-height: 100vh;
+    }
+
+    /*  */
+    /* aspect-ratio */
+
+    .aspect-video {
+        aspect-ratio: var(--aspect-vdieo);
+    }
+
+    /*  */
+    /* scroll-snap */
+
+    .snap-y {
+        scroll-snap-type: y var(--tw-scroll-snap-strictness);
+    }
+
+    .snap-mandatory {
+        --tw-scroll-snap-strictness: mandatory;
+    }
+
+    .snap-start {
+        scroll-snap-align: start;
+    }
+
+    .snap-always {
+        scroll-snap-stop: always;
+    }
+
+    /*  */
+    /* overflow */
+    .overflow-scroll {
+        overflow: scroll;
+    }
+
+    .scroll-smooth {
+        scroll-behavior: smooth;
     }
 }
