@@ -23,8 +23,7 @@ The app intentionally does **not** use:
 
 > [!CAUTION]
 >
-> For local development, you are expected to place video files into the  
-> [public/videos](/public/videos) directory of this repository.
+> For local development, you are expected to place video files into the [public/videos](/public/videos) directory of this repository.
 >
 > For manual setup, tweak the [dev.config.js](/app/dev.config.js) file to configure a base CDN path and specify the video file names to be used.
 >
