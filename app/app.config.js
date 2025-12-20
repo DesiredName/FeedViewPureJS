@@ -3,7 +3,7 @@ const config = Object.freeze({
         filesBasePath: '/public/videos/',
     },
     feed: {
-        pageSize: 10,
+        pageSize: 5,
     },
 });
 

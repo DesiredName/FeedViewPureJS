@@ -24,10 +24,15 @@ const getPage = async (page, size) => {
 
     const globalOffset = (page - 1) * size;
 
-    return Array.from({ length: size }, (_, idx) => {
+    const items = Array.from({ length: size }, (_, idx) => {
         const index = (globalOffset + idx) % feedLength;
         return config.cdn.filesBasePath + feed[index];
     });
+
+    // emulate network delay
+    return new Promise((res) =>
+        setTimeout(() => res(items), 50 + Math.random() * 150),
+    );
 };
 
 const client = {

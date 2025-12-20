@@ -1,0 +1,7 @@
+@layer element {
+    @starting-style {
+        feed-entry-component video {
+            opacity: 0;
+        }
+    }
+}

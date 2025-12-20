@@ -16,7 +16,8 @@ class FeedPage {
     }
 
     #mount() {
-        this.#root.innerHTML = '<feed-component></feed-component>';
+        this.#root.innerHTML =
+            '<feed-component class="h-screen w-screen"></feed-component>';
     }
 }
 
