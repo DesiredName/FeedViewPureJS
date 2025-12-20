@@ -43,65 +43,73 @@ class FeedComponent extends HTMLElement {
     }
 
     #setupObservables() {
-        // re-render as store chages
-        const feedUnsub = feedStore.subscribe((state) => {
+        const feedUnsub = this.#subscribeToFeed();
+        const paginationObserver = this.#observeTopBottomWatchers();
+        const visibilityObserver = this.#createVisibilityObserver();
+
+        // create usubs function for unload component
+        this.#unsubscribe = () => {
+            feedUnsub();
+            paginationObserver.disconnect();
+            visibilityObserver.disconnect();
+        };
+
+        this.#visibilityObserver = visibilityObserver;
+    }
+
+    #subscribeToFeed() {
+        return feedStore.subscribe((state) => {
             const currentFeedsCount = this.#feedContainer.children.length;
             const newItems = state.items.slice(currentFeedsCount);
 
             this.#render(newItems);
         });
+    }
 
-        // top/bottom watchers (initial load and next page load setup)
+    #observeTopBottomWatchers() {
         const options = {
             root: this,
             rootMargin: '0% 0% 200% 0%',
             threshold: 0.1,
         };
 
-        const paginationObserver = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => this.#actOnObserved(entry));
         }, options);
 
-        paginationObserver.observe(this.#topWatcher);
-        paginationObserver.observe(this.#bottomWatcher);
+        observer.observe(this.#topWatcher);
+        observer.observe(this.#bottomWatcher);
 
-        // entries loader for mem optimization
-        const visibilityOptions = {
+        return observer;
+    }
+
+    #createVisibilityObserver() {
+        const options = {
             root: this,
             // keep preloaded 2 ahead and 2 below
             rootMargin: '200% 0% 200% 0%',
             threshold: 0.01,
         };
 
-        this.#visibilityObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.hydrate();
-                } else {
-                    entry.target.dehydrate();
-                }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(({ isIntersecting, target }) => {
+                if (isIntersecting) target.hydrate();
+                else target.dehydrate();
             });
-        }, visibilityOptions);
+        }, options);
 
-        // create usubs function for unload component
-        this.#unsubscribe = () => {
-            feedUnsub();
-            paginationObserver.disconnect();
-            this.#visibilityObserver.disconnect();
-        };
+        return observer;
     }
 
     #actOnObserved(entry) {
-        switch (true) {
-            case entry.isIntersecting !== true:
-                return;
-            case entry.target === this.#bottomWatcher:
-                return feedStore.actions.loadNextPage();
-            case entry.target === this.#topWatcher:
-                if (feedStore.state.items !== 0) {
-                    this.#feedContainer.innerHTML = '';
-                    feedStore.actions.initialLoad();
-                }
+        if (entry.isIntersecting !== true) return;
+
+        if (entry.target === this.#bottomWatcher)
+            feedStore.actions.loadNextPage();
+
+        if (entry.target === this.#topWatcher && feedStore.state.items !== 0) {
+            this.#feedContainer.innerHTML = '';
+            feedStore.actions.initialLoad();
         }
     }
 
