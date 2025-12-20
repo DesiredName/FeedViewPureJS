@@ -17,7 +17,7 @@ The app intentionally does **not** use:
 - Modern JavaScript frameworks or libraries (0 production dependencies)
 - CSS frameworks (though it mimics an atomic, Tailwind-like styling approach)
 - Bundlers
-- TypeScript transpilers (relies on modern IDE support)
+- TypeScript types (relies on modern IDE support and intellisence)
 
 ## Deploy
 
