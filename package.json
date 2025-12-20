@@ -5,14 +5,12 @@
         "http-server": "^14.1.1",
         "prettier": "3.7.4"
     },
-    "keywords": [],
     "license": "ISC",
-    "main": "index.js",
     "name": "videofeed",
     "scripts": {
         "commit": "git add . && git commit -m 'update' && git push",
         "start": "http-server ./ -S -C cert/cert.pem -K cert/key.pem"
     },
-    "type": "commonjs",
+    "type": "module",
     "version": "1.0.0"
 }
