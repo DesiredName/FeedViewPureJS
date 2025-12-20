@@ -1,6 +1,6 @@
 const config = Object.freeze({
     cdn: {
-        filesBasePath: '/public/videos/',
+        filesBasePath: '',
     },
     feed: {
         pageSize: 5,
