@@ -5,6 +5,7 @@ export class FeedEntry extends HTMLElement {
     #src = null;
     #loaded = false;
     #lastCurrentTime = 0;
+    #dehydrateTimer = undefined;
 
     constructor() {
         super();
@@ -36,14 +37,14 @@ export class FeedEntry extends HTMLElement {
                 controls="nodownload"
                 preload="metadata"
                 autoplay muted loop
-                class="w-full h-full object-contain aspect-video transition-opacity delay-100 duration-300"
+                class="w-full h-full max-h-screen object-contain aspect-video transition-opacity delay-100 duration-300"
             >
                 <source src="${this.#src}"></source>
             </video>
         `;
     }
 
-    hydrate() {
+    #hydrate() {
         if (this.#loaded) return;
 
         this.#loaded = true;
@@ -55,7 +56,7 @@ export class FeedEntry extends HTMLElement {
             video.currentTime = this.#lastCurrentTime;
     }
 
-    dehydrate() {
+    #dehydrate() {
         if (this.#loaded === false) return;
 
         this.#loaded = false;
@@ -66,6 +67,16 @@ export class FeedEntry extends HTMLElement {
             this.#lastCurrentTime = video.currentTime;
 
         this.#showLoader();
+    }
+
+    hydrate() {
+        clearTimeout(this.#dehydrateTimer);
+        this.#hydrate();
+    }
+
+    dehydrate() {
+        clearTimeout(this.#dehydrateTimer);
+        this.#dehydrateTimer = setTimeout(() => this.#dehydrate(), 1000);
     }
 }
 
