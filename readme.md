@@ -29,6 +29,18 @@ The app intentionally does **not** use:
 >
 > This configuration file is consumed by the [client/local](/app/packages/client/local.js) package to serve data for the video feed at dev-time.
 
+> [!IMPOPRTANT]
+>
+> For local development, HTTPS is used, hence you need to have certifcates in [/cert](/cert/) folder
+>
+> To generate the certificate, use this code:
+>
+> ```bash
+> openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+> ```
+>
+> Then put files to the [/cert](/cert/) folder
+
 ## Run
 
 For development purposes, run:
