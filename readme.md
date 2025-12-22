@@ -7,10 +7,12 @@ The app leverages the following APIs and tools:
 - **Proxy Object API** — to track and react to data changes
 - **ECMAScript Modules** — to import and organize scripts
 - **Media Source API** — to control and manage video playback
-- **CSS Layers** and the `@initial-state` rule — for structured and maintainable CSS
 - **Intersection Observer API** — to detect visibility and trigger lazy loading
-- **Scroll Snap** CSS properties — to guide and enhance the scrolling experience
 - **Web Components** — to build reusable, encapsulated UI elements
+- **Microtasks Queue** - to batch multiple updates into one task
+- **CSS Layers** — for structured and maintainable CSS
+- **Scroll Snap** CSS properties — to guide and enhance the scrolling experience
+- **CSS `@initial-state` and `@media:prefers-color-scheme`** rules for better UX
 
 The app intentionally does **not** use:
 
